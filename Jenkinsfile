@@ -1,4 +1,4 @@
-pipeline { 
+pipeline {
     agent any
     
     tools {
@@ -7,23 +7,27 @@ pipeline {
     }
 
     stages {
-        
-        stage('Compile') {
+        stage('Git Checkout') {
             steps {
-            sh  "mvn compile"
+               git branch: 'main', url: 'https://github.com/sraamik/FullStack-Blogging-App.git'
             }
         }
         
+        stage('compile') {
+            steps {
+            sh "mvn compile"
+            }
+        }
         stage('Test') {
             steps {
-                sh "mvn test"
+            sh "mvn test"
             }
         }
-        
-        stage('Package') {
+         stage('Package') {
             steps {
-                sh "mvn package"
+            sh "mvn package"
             }
         }
     }
+    
 }
